@@ -46,6 +46,7 @@ $(document).ready(function () {
           console.error("Data tidak valid");
           return;
         }
+         allData = data.reverse(); // Membalik data agar yang terbaru muncul duluan
         updateTable(data);
       })
       .catch((error) => console.error("Gagal mengambil data:", error));
