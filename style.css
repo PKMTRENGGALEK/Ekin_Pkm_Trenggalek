@@ -1,0 +1,147 @@
+body {
+  padding-top: 56px;
+}
+table.dataTable {
+  font-size: 0.8rem;
+}
+.navbar {
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  background-color: transparent !important;
+}
+
+.sidebar {
+  position: fixed;
+  top: 56px;
+  left: 0;
+  height: 100%;
+  width: 250px;
+  background-color: white;
+  padding-top: 20px;
+  color: black;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
+}
+
+.sidebar a {
+  color: black;
+  display: flex;
+  align-items: center;
+  padding: 12px 15px;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  border-radius: 8px;
+  margin: 5px;
+}
+
+.sidebar a i {
+  margin-right: 10px;
+}
+
+.sidebar a:hover {
+  background-color: #f0f0f0;
+}
+
+.sidebar a.active {
+  background: linear-gradient(135deg, #6a11cb, #2575fc);
+  color: white;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  transform: scale(1.05);
+  transition: all 0.3s ease-in-out;
+}
+
+.content {
+  margin-left: 260px;
+  padding: 20px;
+}
+
+.page {
+  display: none;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
+}
+
+.page.active {
+  display: block;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@media (max-width: 768px) {
+  .sidebar {
+    transform: translateX(-100%);
+  }
+  .content {
+    margin-left: 0;
+  }
+  .navbar-collapse {
+    background-color: white !important;
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+}
+.fas.fa-bell {
+  transform: translateX(-20px); /* Geser ke kiri 10px */
+}
+.navbar {
+  height: 50px; /* Pastikan navbar tetap dalam ukuran normal */
+  /* Mencegah elemen lain membuatnya membesar */
+  /* overflow: hidden;  */
+}
+
+/* Pastikan dropdown berada di atas konten lain */
+#notif-dropdown {
+  position: absolute;
+  top: 50px; /* Mengatur jarak dari ikon lonceng */
+  right: 0;
+  width: 300px;
+  max-height: 300px;
+  overflow-y: auto;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+  z-index: 1050; /* Pastikan lebih tinggi dari navbar */
+  padding: 10px;
+}
+
+/* Posisi badge tetap di ikon */
+.nav-item {
+  position: relative;
+}
+
+.nav-item .badge {
+  font-size: 12px;
+  padding: 4px 7px;
+  position: absolute;
+  top: 0;
+  right: 0;
+  transform: translate(50%, -50%);
+}
+
+/* Styling untuk daftar notifikasi */
+#notif-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+#notif-list li {
+  padding: 8px;
+  border-bottom: 1px solid #ddd;
+}
+
+#notif-list li:last-child {
+  border-bottom: none;
+}
+
+/* Styling untuk tulisan 'Tidak ada notifikasi' */
+#notif-list .text-muted {
+  font-size: 14px;
+  padding: 10px 0;
+}
+#notif-badge:empty,
+#notif-badge.d-none {
+  display: none !important;
+}

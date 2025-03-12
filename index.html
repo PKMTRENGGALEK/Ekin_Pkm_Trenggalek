@@ -1,0 +1,380 @@
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Website Kesehatan</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+    <script src="myscript.js"></script>
+    <!-- Select2 -->
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css"rel="stylesheet"/>
+    <link href="https://cdn.jsdelivr.net/npm/@ttskch/select2-bootstrap4-theme@1.5.2/dist/select2-bootstrap4.min.css" rel="stylesheet"/>
+    <!-- Load JS Select2 -->
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js"></script>
+    <link href="https://cdn.datatables.net/1.11.5/css/dataTables.bootstrap5.min.css" rel="stylesheet">
+    <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap5.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <link
+    rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css"
+  />
+</head>
+<body onload="fadeInContent()">
+    <nav class="navbar navbar-expand-lg fixed-top">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">
+                <img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" alt="Logo" width="30" height="30" class="d-inline-block align-top">
+                Kesehatan
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+      
+            <li class="nav-item me-3 position-relative">
+                <a class="nav-link position-relative" href="#" onclick="toggleNotifications(event)">
+                    <i class="fas fa-bell fa-lg"></i>
+                    <span id="notif-badge" class="badge rounded-pill bg-danger position-absolute d-none">1</span>
+                </a>
+            
+                <!-- Dropdown Notifikasi -->
+                <div id="notif-dropdown" class="dropdown-menu dropdown-menu-end p-2 d-none" style="width: 250px;">
+                    <strong>Notifikasi</strong>
+                    <ul id="notif-list" class="list-unstyled mt-2"></ul>
+                </div>
+            </li>
+            
+            
+        </div>
+    </nav>   
+    <div class="sidebar">
+        <a onclick="changeContent('home', this)" class="active"><i class="fas fa-home"></i> Beranda</a>
+        <a onclick="changeContent('input', this)"><i class="fas fa-book"></i>Input Data</a>
+        <a onclick="changeContent('kontak', this)"><i class="fas fa-envelope"></i> Kontak</a>
+    </div>   
+    <div class="content">
+        <div id="home" class="page active">
+            <h1>Beranda</h1>
+            <p>Selamat datang di website kesehatan.</p>
+                 
+           <div class="card shadow mt-2">
+               <div class="card-body">
+                
+                <div class="container mt-4">
+                    <h2 class="text-center">Data File Ekin Puskesmas Trenggalek</h2>
+                    <div class="row mb-3">
+                      <div class="col-md-4">
+                        <input
+                          type="text"
+                          id="search-nama"
+                          class="form-control"
+                          placeholder="Cari berdasarkan Nama"
+                        />
+                      </div>
+                      <div class="col-md-4">
+                        <input
+                          type="text"
+                          id="search-tahun"
+                          class="form-control"
+                          placeholder="Cari berdasarkan Tahun"
+                        />
+                      </div>
+                      <div class="col-md-4">
+                        <input
+                          type="text"
+                          id="search-bulan"
+                          class="form-control"
+                          placeholder="Cari berdasarkan Bulan"
+                        />
+                      </div>
+                    </div>
+                    <div id="table-container" class="table-responsive" style="display: none">
+                      <table id="data-table" class="table table-striped">
+                        <thead>
+                          <tr>
+                            <th class="text-center">Nama</th>
+                            <th class="text-center">Tahun</th>
+                            <th class="text-center">Bulan</th>
+                            <th class="text-center">File Ekinerja</th>
+                          </tr>
+                        </thead>
+                        <tbody id="table-body"></tbody>
+                      </table>
+                    </div>
+                  </div>
+                
+               </div>
+           </div>           
+        </div>
+        <div id="kontak" class="page">
+            <h1>Kontak</h1>
+            <p>Hubungi kami untuk informasi lebih lanjut.</p>
+        </div>
+        <div id="input" class="page">
+            <!-- <h1>Artikel</h1> -->
+           <h2>Upload File & Input Data Ekin</h2><hr>
+
+                <div class="container mt-5">
+        <div class="card shadow-sm">
+            <div class="card-header bg-primary text-white">
+                <h4 class="mb-0">Upload File & Input Data</h4>
+            </div>
+            <div class="card-body">
+                <form id="dataForm">
+                    <div class="mb-3">
+                        <label for="nama" class="form-label">Nama</label>
+                        <select class="form-select select2" id="nama" required>
+                            <option value="">-- Pilih Nama --</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="nip" class="form-label">NIP</label>
+                        <input type="text" class="form-control" id="nip" readonly>
+                    </div>
+                    <div class="mb-3">
+                        <label for="bulan" class="form-label">Bulan</label>
+                        <select class="form-select select2" id="bulan">
+                            <option value="">-- Pilih Bulan --</option>
+                            <option>JANUARI</option>
+                            <option>FEBRUARI</option>
+                            <option>MARET</option>
+                            <option>APRIL</option>
+                            <option>MEI</option>
+                            <option>JUNI</option>
+                            <option>JULI</option>
+                            <option>AGUSTUS</option>
+                            <option>SEPTEMBER</option>
+                            <option>OKTOBER</option>
+                            <option>NOVEMBER</option>
+                            <option>DESEMBER</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="tahun" class="form-label">Tahun</label>
+                        <select class="form-select select2" id="tahun">
+                            <option value="">-- Pilih Tahun --</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="file_ekin" class="form-label">Upload File e-Kin (PDF)</label>
+                        <input type="file" class="form-control" id="file_ekin" accept="application/pdf" required>
+                    </div>
+                     <!-- Progress Bar -->
+                    <div class="mb-3">
+                        <div class="progress d-none" id="uploadProgressContainer">
+                            <div class="progress-bar" id="uploadProgressBar" role="progressbar" style="width: 0%;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">0%</div>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary" id="submitBtn">
+                        <span id="submitText">Kirim</span>
+                        <span id="loadingSpinner" class="spinner-border spinner-border-sm d-none"></span>
+                    </button>
+                </form>
+                <div id="responseMessage" class="mt-3"></div>
+            </div>
+        </div>
+        </div>     
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
+<script>
+    document.getElementById("file_ekin").addEventListener("change", function () {
+  let file = this.files[0];
+  if (file) {
+    let progressBarContainer = document.getElementById("uploadProgressContainer");
+    let progressBar = document.getElementById("uploadProgressBar");
+
+    progressBarContainer.classList.remove("d-none");
+    progressBar.style.width = "0%";
+    progressBar.innerText = "0%";
+
+    let reader = new FileReader();
+    reader.onloadstart = function () {
+      progressBar.style.width = "0%";
+      progressBar.innerText = "0%";
+    };
+    reader.onprogress = function (event) {
+      if (event.lengthComputable) {
+        let percent = Math.round((event.loaded / event.total) * 100);
+        progressBar.style.width = percent + "%";
+        progressBar.innerText = percent + "%";
+      }
+    };
+    reader.onloadend = function () {
+      progressBar.style.width = "100%";
+      progressBar.innerText = "100%";
+    };
+    reader.readAsDataURL(file);
+  }
+});
+
+document.getElementById("dataForm").addEventListener("submit", function (event) {
+  event.preventDefault();
+
+  let submitBtn = document.getElementById("submitBtn");
+  let submitText = document.getElementById("submitText");
+  let loadingSpinner = document.getElementById("loadingSpinner");
+  let progressBarContainer = document.getElementById("uploadProgressContainer");
+  let progressBar = document.getElementById("uploadProgressBar");
+
+  submitText.innerText = "Loading...";
+  loadingSpinner.classList.remove("d-none");
+  submitBtn.disabled = true;
+
+  let nama = document.getElementById("nama").value;
+  let nip = document.getElementById("nip").value;
+  let bulan = document.getElementById("bulan").value;
+  let tahun = document.getElementById("tahun").value;
+  let fileInput = document.getElementById("file_ekin").files[0];
+
+  if (!fileInput) {
+    Swal.fire("Gagal!", "Harap unggah file PDF!", "error");
+    resetButton();
+    return;
+  }
+
+  let reader = new FileReader();
+  reader.onloadend = function () {
+    let base64File = reader.result.split(",")[1];
+    let formData = new FormData();
+    formData.append("nama", nama);
+    formData.append("nip", nip);
+    formData.append("bulan", bulan);
+    formData.append("tahun", tahun);
+    formData.append("file", base64File);
+    formData.append("fileName", fileInput.name);
+
+    fetch("https://script.google.com/macros/s/AKfycbxsue6pFrEQW_CoBIJUZ2bIfS03OGJzn-GJof5vMg91wmh_PCdsEg408uEzLPp4_yFmVw/exec", {
+      method: "POST",
+      body: formData,
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.status === "success") {
+          Swal.fire("Berhasil!", "File berhasil diunggah dan disimpan!", "success");
+
+          // 🔔 Tambahkan Notifikasi
+          addNotification(nama);
+
+          // Reset Form
+          document.getElementById("dataForm").reset();
+          $("#nama").val(null).trigger("change");
+          $("#bulan").val(null).trigger("change");
+          $("#tahun").val("").trigger("change");
+
+          // Sembunyikan progress bar
+          progressBarContainer.classList.add("d-none");
+          progressBar.style.width = "0%";
+          progressBar.innerText = "0%";
+        } else {
+          Swal.fire("Gagal!", data.message, "error");
+        }
+        resetButton();
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+        Swal.fire("Gagal!", "Terjadi kesalahan, coba lagi!", "error");
+        resetButton();
+      });
+  };
+  reader.readAsDataURL(fileInput);
+});
+
+function resetButton() {
+  let submitBtn = document.getElementById("submitBtn");
+  let submitText = document.getElementById("submitText");
+  let loadingSpinner = document.getElementById("loadingSpinner");
+
+  submitText.innerText = "Kirim";
+  loadingSpinner.classList.add("d-none");
+  submitBtn.disabled = false;
+}
+
+// 🔔 FUNGSI NOTIFIKASI
+function addNotification(nama) {
+  let notifList = document.getElementById("notif-list");
+  let notifBadge = document.getElementById("notif-badge");
+
+  // Tambahkan item notifikasi baru
+  let notifItem = document.createElement("li");
+  notifItem.innerHTML = `<small><i class="fas fa-user"></i> ${nama} telah mengunggah file.</small>`;
+  notifList.prepend(notifItem);
+
+  // Perbarui Badge Notifikasi
+  let count = parseInt(notifBadge.innerText) || 0;
+  count++;
+  notifBadge.innerText = count;
+  notifBadge.classList.remove("d-none"); // ✅ Tampilkan badge jika ada notifikasi
+}
+
+// ✅ Tampilkan atau Sembunyikan Notifikasi
+function showNotifications() {
+  let dropdown = document.getElementById("notif-dropdown");
+  dropdown.classList.toggle("d-none");
+}
+
+// ✅ Reset Badge jika Semua Notifikasi Dibaca
+function resetNotifications() {
+  let notifBadge = document.getElementById("notif-badge");
+  notifBadge.classList.add("d-none"); // ✅ Sembunyikan badge jika tidak ada notifikasi
+  notifBadge.innerText = "0";
+  document.getElementById("notif-list").innerHTML = ""; // Hapus daftar notifikasi
+}
+document.addEventListener("DOMContentLoaded", function () {
+    let notifBadge = document.getElementById("notif-badge");
+    let notifDropdown = document.getElementById("notif-dropdown");
+    let notifList = document.getElementById("notif-list");
+
+    // Ambil status notifikasi dari LocalStorage
+    let notifCount = localStorage.getItem("notifCount") || 1; // Default 1 jika belum ada notifikasi
+    updateNotificationBadge(notifCount);
+
+    function updateNotificationBadge(count) {
+        if (count > 0) {
+            notifBadge.innerText = count;
+            notifBadge.classList.remove("d-none");
+        } else {
+            notifBadge.classList.add("d-none");
+        }
+    }
+
+    window.toggleNotifications = function (event) {
+        event.preventDefault();
+
+        // Jika tidak ada notifikasi, tampilkan pesan "Tidak ada notifikasi"
+        if (notifList.children.length === 0) {
+            notifList.innerHTML = "<li class='text-center text-muted'>Tidak ada notifikasi</li>";
+        }
+
+        // Toggle dropdown
+        if (notifDropdown.classList.contains("d-none")) {
+            notifDropdown.classList.remove("d-none");
+            notifDropdown.classList.add("show");
+
+            // Hanya sembunyikan badge, tapi tetap simpan status di LocalStorage
+            if (notifBadge && notifBadge.innerText !== "0") {
+                notifBadge.classList.add("d-none");
+            }
+        } else {
+            notifDropdown.classList.add("d-none");
+            notifDropdown.classList.remove("show");
+        }
+    };
+
+    // Tutup dropdown jika klik di luar area notifikasi
+    document.addEventListener("click", function (event) {
+        let notifIcon = document.querySelector(".nav-link");
+        if (!notifIcon.contains(event.target) && !notifDropdown.contains(event.target)) {
+            notifDropdown.classList.add("d-none");
+            notifDropdown.classList.remove("show");
+        }
+    });
+});
+
+
+</script>
